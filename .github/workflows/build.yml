@@ -22,11 +22,11 @@ jobs:
           java-version: '17'
           cache: maven
 
-      - name: Build and install DisguiseAPI
+      - name: Build and install DisguiseAPI (API module only)
         run: |
           git clone --depth 1 https://github.com/itspinger/DisguiseAPI.git
           cd DisguiseAPI
-          mvn -B clean install -DskipTests
+          mvn -B clean install -DskipTests -pl API -am
 
       - name: Build Hynick
         run: mvn -B clean package --file pom.xml
