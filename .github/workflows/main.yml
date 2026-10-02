@@ -16,13 +16,19 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Set up JDK
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@v5
         with:
           distribution: temurin
           java-version: '17'
           cache: maven
 
-      - name: Build with Maven
+      - name: Build and install DisguiseAPI
+        run: |
+          git clone --depth 1 https://github.com/itspinger/DisguiseAPI.git
+          cd DisguiseAPI
+          mvn -B clean install -DskipTests
+
+      - name: Build Hynick
         run: mvn -B clean package --file pom.xml
 
       - name: Upload artifact
