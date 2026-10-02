@@ -1,10 +1,10 @@
-name: Build
+name: Build Hynick
 
 on:
   push:
-    branches: [ main, master ]
+    branches: [ "main", "master" ]
   pull_request:
-    branches: [ main, master ]
+    branches: [ "main", "master" ]
   workflow_dispatch:
 
 jobs:
@@ -12,27 +12,32 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - name: Checkout Hynick
+        uses: actions/checkout@v5
 
-      - name: Set up JDK
+      - name: Set up JDK 21
         uses: actions/setup-java@v5
         with:
           distribution: temurin
-          java-version: '17'
+          java-version: '21'
           cache: maven
 
-      - name: Build and install DisguiseAPI (API module only)
-        run: |
-          git clone --depth 1 https://github.com/itspinger/DisguiseAPI.git
-          cd DisguiseAPI
-          mvn -B clean install -DskipTests -pl API -am
+      # DisguiseAPI 1.4.0 isn't published publicly, so build it first
+      - name: Checkout DisguiseAPI
+        uses: actions/checkout@v5
+        with:
+          repository: itspinger/DisguiseAPI
+          path: DisguiseAPI
+
+      - name: Install DisguiseAPI to local Maven repo
+        run: mvn -B install -DskipTests --file DisguiseAPI/pom.xml
 
       - name: Build Hynick
         run: mvn -B clean package --file pom.xml
 
-      - name: Upload artifact
+      - name: Upload Hynick jar
         uses: actions/upload-artifact@v4
         with:
-          name: Hynick
-          path: '**/target/*.jar'
+          name: Hynick-jar
+          path: Hynick/target/*.jar
+          if-no-files-found: error
