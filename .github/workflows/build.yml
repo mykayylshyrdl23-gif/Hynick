@@ -19,7 +19,6 @@ jobs:
         with:
           repository: itspinger/DisguiseAPI
           path: DisguiseAPI
-          ref: PUT_TAG_OR_COMMIT_HERE   # <-- این خط را اضافه کنید
 
       - name: Build DisguiseAPI
         run: mvn -B install -DskipTests --file DisguiseAPI/pom.xml
