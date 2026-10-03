@@ -1,6 +1,6 @@
 package net.pinger.hynick.player;
 
-import net.pinger.disguise.Skin;
+import net.pinger.disguise.skin.Skin;
 import net.pinger.hynick.rank.Rank;
 
 import javax.annotation.Nonnull;
