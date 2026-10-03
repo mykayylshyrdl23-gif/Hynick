@@ -1,0 +1,5 @@
+name: Hynick
+version: 1.0.0
+main: net.pinger.hynick.HynickPlugin
+depend: [DisguiseAPI]
+softdepend: [Vault, TAB]
